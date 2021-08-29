@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca Brasileira</title>
+</head>
+<body>
+    <!--Pesquisar Livro pelo nome-->
+
+    <!--Pesquisar disponilidade-->
+
+    <!--Empréstimo-->
+
+    <!--Buscar Livro pelo id-->
+    <div>
+        <input type="text" name="" id="valor" placeholder="Digite o ID do Livro">
+        <button onclick="pesquisar()">Pesquisar</button>
+        <p>Título: <span id="titulo"></span><br>
+        Autor: <span id="autor"></span><br>
+        Número de páginas: <span id="npag"></span></p>
+    </div>
+    <!--Envio de dados-->
+    <div>
+        <input type="text" name="" id="titulo" placeholder="Digite o título Livro">
+        <input type="text" name="" id="autor" placeholder="Digite o autor Livro">
+        <input type="text" name="" id="numeropags" placeholder="Digite o número de páginas Livro">
+        <button onclick="enviar()">Enviar</button>
+        <span id="res"></span>
+        <div id="resuser"></div>
+    </div>
+</body>
+<script src="jquery-3.6.0.min.js"></script>
+<script>
+    //Pesquisa livro pelo id
+    function pesquisar(){
+    let id=document.querySelector('#valor').value;
+        $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/livros/'+id,
+        success: function(dados){
+            $('#titulo').text(dados.titulo);
+            $('#autor').text(dados.autor);
+            $('#npag').text(dados.numeroDePaginas)
+        }
+        });
+    }
+    //Envio de dados para o Banco de Dados
+    function enviar(){
+
+        $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/livros',
+        data: JSON.stringify(
+            {
+            titulo:$("#titulo").val(),
+            autor:$("#autor").val(),
+            numeropags:$("#numeropags").val()
+        }),
+        contentType: 'application/json',
+        success: function(dados){
+            let resultado =JSON.stringify(dados.dadosEnviados)
+            $('#res').text(' Enviado! ');
+            $('#resuser').text(resultado);
+        }
+        });
+    }
+</script>
+</html>
