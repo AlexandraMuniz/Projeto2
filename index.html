@@ -5,12 +5,12 @@
     <title>Biblioteca Brasileira</title>
 </head>
 <body>
-    <!--Pesquisar Livro pelo nome-->
-
     <!--Pesquisar disponilidade-->
 
     <!--Empréstimo-->
 
+    <!--Pesquisar Livro pelo nome ou autor-->
+    
     <!--Buscar Livro pelo id-->
     <div>
         <input type="text" name="" id="valor" placeholder="Digite o ID do Livro">
@@ -18,7 +18,9 @@
         <p>Título: <span id="titulo"></span><br>
         Autor: <span id="autor"></span><br>
         Número de páginas: <span id="npag"></span></p>
+        
     </div>
+    <hr/>
     <!--Envio de dados-->
     <div>
         <input type="text" name="" id="titulo" placeholder="Digite o título Livro">
@@ -28,9 +30,24 @@
         <span id="res"></span>
         <div id="resuser"></div>
     </div>
+    <hr/>
+    <!--Mostar arquivos-->
+    <button onclick="mostrar()">Exibir Livros</button>
+    <p><span id="resultado"></span>
+    <hr/>
 </body>
 <script src="jquery-3.6.0.min.js"></script>
 <script>
+    //Exibe todos os livros da biblioteca
+    function mostrar(){
+        $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/mostrar',
+        success: function(dados){
+            $('#resultado').html(dados);
+        }
+        });
+    }
     //Pesquisa livro pelo id
     function pesquisar(){
     let id=document.querySelector('#valor').value;

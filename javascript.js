@@ -17,13 +17,56 @@ const client = new pg.Client(
     }
 );
 client.connect();
+//Exibe todos os livros das Biblioteca(não está funcionando)
+app.get('/mostrar', function (req, res) {
+    client.query(
+        {
+            text: 'SELECT * FROM livro'
+        }
+    )
+    .then(
+        function(ret) {
+            let livro=ret.rows[all];
+            res.json(
+                {
+                titulo: livro.titulo,
+                autor: livro.autor,
+                paginas: livro.npag
+                
+            }
+            );
+            }
+    )
+}
+);
+//mostra livro com titulo expecifico(não está funcionando)
+app.get('/pesquisar/:autor', function(req,res){
+    client.query(
+        {
+            text:'SELECT autor, titulo, npag FROM livro WHERE autor = $1',
+            values:[req.params.autor]
+        }
+    ).then(
+        function(ret){
+            let livros=ret.rows[0];
+            res.json(
+                {
+                    status:'OK',
+                    autor:livros.autor,
+                    titulo: livros.titulo,
+                    numeroDePaginas:livros.npag
+                }
+            );
+        }
+    )
+}
 
-
-
+)
+//procurar livros por id
 app.get('/livros/:id', function(req, res){
     client.query(
         {
-            text:'SELECT * FROM livros WHERE id = $1',
+            text:'SELECT * FROM livro WHERE id = $1',
             values:[req.params.id]
         }
     )
@@ -35,7 +78,7 @@ app.get('/livros/:id', function(req, res){
                     status:'OK',
                     autor:livros.autor,
                     titulo: livros.titulo,
-                    numeroDePaginas:livros.npags
+                    numeroDePaginas:livros.npag
                 }
             );
         }
@@ -45,7 +88,7 @@ app.get('/livros/:id', function(req, res){
 app.post('/livros', function(req, res){
     client.query(
         {
-            text:'INSERT INTO livros (titulo,autor, npags) VALUES($1,$2,$3)',
+            text:'INSERT INTO livro (titulo,autor, npags) VALUES($1,$2,$3)',
             values:[req.body.titulo, req.body.autor, req.body.numeropags]
         }
     )
