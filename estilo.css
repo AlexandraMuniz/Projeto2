@@ -1,0 +1,120 @@
+    /*Corpo do site*/
+
+*{
+    padding: 0;
+    margin: 0;  
+}
+
+body{
+    font-size: 12pt;
+    font-family: 'Arial';
+    background-color: rgb(248, 246, 246);
+}
+#corpo{
+    width: 87%;
+    background: rgb(213, 255, 255);
+    margin:auto;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    box-shadow: 2px 5px 16px rgb(29, 28, 28);
+}
+    /* cabeçalho */
+
+img{
+    width: 100%;
+    height: 150;
+}
+
+#cabecalho{
+    padding: 20px;
+    font-size: 16pt;
+    text-align: center;
+    border-bottom: 1px solid #8c8c8c;
+}
+#cabecalho a{
+    text-decoration: none;
+    padding-right: 50px;
+    color:rgb(10, 156, 156);
+}
+
+h1{
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    color: rgb(43, 81, 165);
+}
+/* Sobre */
+
+#sobre h3{
+    padding: 20px;
+}
+/*pesquisar*/
+
+#pesquisar{
+    padding: 20px;
+}
+#pesquisar input{
+    padding: 5px;
+}
+
+#pesquisar button{
+    padding: 5px;
+    margin-top: 20px;
+}
+
+/* Emprestimo */
+#emprestimo{
+    padding: 20px;
+    line-height: 40px;
+}
+#emprestimo input{
+    padding: 4px;
+}
+
+#emprestimo button{
+    padding: 4px;
+}
+
+h3{
+    padding-bottom: 20px;
+    color: rgb(2, 155, 53);
+    font-size: 17pt;
+}
+
+p{
+    padding: 20px;
+}
+/* Buscar */ 
+#buscarLivro {
+    padding: 20px;
+}
+
+#buscarLivro input{
+    padding: 5px;
+}
+
+#buscarLivro button{
+    padding: 5px;
+}
+
+#buscarLivro p{
+    padding: 10px;
+    line-height: 26px;
+}
+
+/* Adicionar*/
+
+#enviar{
+    padding: 20px;
+}
+
+#enviar input{
+    padding: 5px;
+    margin-right: 4px; 
+}
+#enviar button{
+    padding: 5px;
+    margin-top: 10px;
+}

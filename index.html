@@ -3,61 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <title>Biblioteca Brasileira</title>
+
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <!--Pesquisar disponilidade-->
-
-    <!--Empréstimo-->
-
-    <!--Pesquisar Livro pelo nome ou autor-->
-    
-    <!--Buscar Livro pelo id-->
-    <div>
-        <input type="text" name="" id="valor" placeholder="Digite o ID do Livro">
-        <button onclick="pesquisar()">Pesquisar</button>
-        <p>Título: <span id="titulo"></span><br>
-        Autor: <span id="autor"></span><br>
-        Número de páginas: <span id="npag"></span></p>
+    <div id="corpo">
+        <!--Cabeçalho-->
+        <img src="img/banner.png" alt="banner">
         
+        <header>
+            <div id="cabecalho">
+                <a href="index.html">Home</a>
+                <a href="#buscarLivro">Buscar</a>
+                <a href="#enviar">Adicionar</a>
+                <a href="#emprestimo">Emprestimo</a>
+            </div>
+        </header>
+        
+        <h1>Biblioteca Brasileira</h1>
+        <!--Sobre o site-->
+        <div id="sobre">
+            <h3>Sobre</h3>
+            <p>Nossa biblioteca, há muitos livros interessante.</p>
+        </div>
+        <hr/>
+
+        <!--Pesquisar disponilidade-->
+        <div id="pesquisar">
+            <h3>Pesquisar</h3>
+            Livro: <input type="text" name="" id="titulo" placeholder="Digite o título do Livro"></br>
+            <button>Buscar</button>
+        </div>
+        <hr/>
+        <!--Empréstimo-->
+        <div id="emprestimo">
+            <h3>Empréstimo</h3>
+            Nome: <input type="text" name="" id="name" placeholder="Digite seu nome: "></br>
+            Número: <input type="number" name="" id="number" placeholder="Digite seu número: "></br>
+            Nome Livro: <input type="text" name="" id="titulo" placeholder="Digite o título do Livro:"></br>
+            Autor:  <input type="text" name="" id="name" placeholder="Digite o autor do Livro"></br>
+            <button>Enviar</button>
+        </div>
+        <hr/>
+        <!--Pesquisar Livro pelo nome ou autor-->
+        
+        <!--Buscar Livro pelo id-->
+        <div id="buscarLivro">
+
+            <h3>Buscar</h3>
+
+            <input type="text" name="" id="valor" placeholder="Digite o ID do Livro">
+            <button onclick="buscaID()">Pesquisar</button>
+            <p> Título: <span id="idtitulo"></span><br>
+                Autor: <span id="idautor"></span><br>
+                Número de páginas: <span id="idnpag"></span></p>
+        </div>
+        <hr/>     
+        
+        <!--Envio de dados-->
+        <div id="enviar">
+            <h3>Adicionar</h3>
+            Nome: <input type="text" name="" id="titulo" placeholder="Digite o título Livro">
+            Autor: <input type="text" name="" id="autor" placeholder="Digite o autor Livro">
+            Nº páginas:<input type="text" name="" id="numeropags" placeholder="Digite o número de páginas Livro">
+            <button onclick="enviar()">Enviar</button>
+            <span id="res"></span>
+            <div id="resuser"></div>
+        </div>
+        <hr/>
+    
+        <div id="enviar">    
+            <!--Mostar arquivos-->
+            <button onclick="mostrar()">Exibir Livros</button>
+            <p><span id="resultado"></span></p>
+            <hr/>  
+        </div>
     </div>
-    <hr/>
-    <!--Envio de dados-->
-    <div>
-        <input type="text" name="" id="titulo" placeholder="Digite o título Livro">
-        <input type="text" name="" id="autor" placeholder="Digite o autor Livro">
-        <input type="text" name="" id="numeropags" placeholder="Digite o número de páginas Livro">
-        <button onclick="enviar()">Enviar</button>
-        <span id="res"></span>
-        <div id="resuser"></div>
-    </div>
-    <hr/>
-    <!--Mostar arquivos-->
-    <button onclick="mostrar()">Exibir Livros</button>
-    <p><span id="resultado"></span>
-    <hr/>
 </body>
 <script src="jquery-3.6.0.min.js"></script>
 <script>
     //Exibe todos os livros da biblioteca
+
     function mostrar(){
         $.ajax({
         type: 'GET',
         url: 'http://localhost:3000/mostrar',
         success: function(dados){
-            $('#resultado').html(dados);
+            let livros =JSON.stringify(dados.resultados)
+            ///let autores =JSON.stringify(dados.autor)
+            //let npags =JSON.stringify(dados.npag)
+            $('#resultado').text(livros);
+            
+            //$('#autor2').text(autores);
+           // $('#npag2').text(npags);
         }
         });
     }
     //Pesquisa livro pelo id
-    function pesquisar(){
+    function buscaID(){
     let id=document.querySelector('#valor').value;
         $.ajax({
         type: 'GET',
         url: 'http://localhost:3000/livros/'+id,
+        
         success: function(dados){
-            $('#titulo').text(dados.titulo);
-            $('#autor').text(dados.autor);
-            $('#npag').text(dados.numeroDePaginas)
+            $('#idtitulo').text(dados.titulo);
+            $('#idautor').text(dados.autor);
+            $('#idnpag').text(dados.numeroDePaginas)
         }
         });
     }

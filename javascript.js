@@ -17,7 +17,7 @@ const client = new pg.Client(
     }
 );
 client.connect();
-//Exibe todos os livros das Biblioteca(não está funcionando)
+//Exibe todos os livros das Biblioteca
 app.get('/mostrar', function (req, res) {
     client.query(
         {
@@ -26,15 +26,25 @@ app.get('/mostrar', function (req, res) {
     )
     .then(
         function(ret) {
-            let livro=ret.rows[all];
-            res.json(
-                {
-                titulo: livro.titulo,
-                autor: livro.autor,
-                paginas: livro.npag
-                
+            let array=[];
+            for(livro of ret.rows){
+                array.push(
+                    {
+                        id: livro.id,
+                        Titulo: livro.titulo,
+                        Autor: livro.autor,
+                        numeropags: livro.npag
+                    }
+                );
             }
-            );
+            res.json({
+                status:'OK',
+                numeroDeResultados:array.length,
+                resultados:array
+                
+
+            });
+
             }
     )
 }
@@ -76,8 +86,8 @@ app.get('/livros/:id', function(req, res){
             res.json(
                 {
                     status:'OK',
-                    autor:livros.autor,
                     titulo: livros.titulo,
+                    autor:livros.autor,
                     numeroDePaginas:livros.npag
                 }
             );
