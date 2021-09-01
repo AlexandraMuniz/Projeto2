@@ -64,7 +64,7 @@ h1{
     margin-top: 20px;
 }
 
-/* Emprestimo */
+/* Emprestimo 
 #emprestimo{
     padding: 20px;
     line-height: 40px;
@@ -76,7 +76,7 @@ h1{
 #emprestimo button{
     padding: 4px;
 }
-
+*/
 h3{
     padding-bottom: 20px;
     color: rgb(2, 155, 53);
@@ -115,6 +115,14 @@ p{
     margin-right: 4px; 
 }
 #enviar button{
+    padding: 5px;
+    margin-top: 10px;
+}
+/* Lista todos do livros*/
+#mostra{
+    padding: 20px;
+}
+#mostra button{
     padding: 5px;
     margin-top: 10px;
 }

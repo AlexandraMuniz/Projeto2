@@ -31,9 +31,10 @@ app.get('/mostrar', function (req, res) {
                 array.push(
                     {
                         id: livro.id,
-                        Titulo: livro.titulo,
-                        Autor: livro.autor,
-                        numeropags: livro.npag
+                        titulo: livro.titulo,
+                        autor: livro.autor,
+                        numeropags: livro.npag,
+                        ano:livro.ano
                     }
                 );
             }
@@ -41,7 +42,6 @@ app.get('/mostrar', function (req, res) {
                 status:'OK',
                 numeroDeResultados:array.length,
                 resultados:array
-                
 
             });
 
@@ -49,29 +49,53 @@ app.get('/mostrar', function (req, res) {
     )
 }
 );
-//mostra livro com titulo expecifico(não está funcionando)
-app.get('/pesquisar/:autor', function(req,res){
+//mostra livro de um autor especifico
+
+//procura por um titulo especifico
+app.get('/pesquisar1/:titulo', function(req,res){
     client.query(
         {
-            text:'SELECT autor, titulo, npag FROM livro WHERE autor = $1',
+    text:'SELECT * FROM livro WHERE titulo like $1',
+            values:[req.params.titulo]
+        }
+    ).then(
+        function(ret){
+           
+           let livro=ret.rows[0];
+            res.json({
+                status:'OK',
+                titulo:livro.titulo,
+                autor:livro.autor,
+                paginas:livro.npag,
+                ano:livro.ano
+            }
+            );
+        }
+    );
+});
+//pesquisa pelo autor
+app.get('/pesquisar2/:autor', function(req,res){
+    client.query(
+        {
+    text:'SELECT * FROM livro WHERE autor like $1',
             values:[req.params.autor]
         }
     ).then(
         function(ret){
-            let livros=ret.rows[0];
-            res.json(
-                {
-                    status:'OK',
-                    autor:livros.autor,
-                    titulo: livros.titulo,
-                    numeroDePaginas:livros.npag
-                }
+           
+           let livro=ret.rows[0];
+            res.json({
+                status:'OK',
+                titulo:livro.titulo,
+                autor:livro.autor,
+                paginas:livro.npag,
+                ano:livro.ano
+            }
             );
         }
-    )
-}
+    );
+});
 
-)
 //procurar livros por id
 app.get('/livros/:id', function(req, res){
     client.query(
@@ -88,18 +112,19 @@ app.get('/livros/:id', function(req, res){
                     status:'OK',
                     titulo: livros.titulo,
                     autor:livros.autor,
-                    numeroDePaginas:livros.npag
+                    numeroDePaginas:livros.npag,
+                    ano: livros.ano
                 }
             );
         }
     );
 });
-
-app.post('/livros', function(req, res){
+//Envia para Banco de Dados
+app.post('/enviar', function(req, res){
     client.query(
         {
-            text:'INSERT INTO livro (titulo,autor, npags) VALUES($1,$2,$3)',
-            values:[req.body.titulo, req.body.autor, req.body.numeropags]
+            text:'INSERT INTO livro (titulo,autor, npag, ano) VALUES($1,$2,$3,$4)',
+            values:[req.body.titulo, req.body.autor, req.body.numeropags, req.body.ano]
         }
     )
     .then(
@@ -107,6 +132,7 @@ app.post('/livros', function(req, res){
             res.json(
                 {
                     status:'OK',
+                    titulo:req.body.titulo,
                     dadosEnviados: req.body
                 }
             );
